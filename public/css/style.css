@@ -1,0 +1,307 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+  --main-darklg: #1d2635;
+  --main-dark: #161d29;
+  --primary-color: #2f80ec;
+  --main-light: #eeeeee;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: var(--main-darklg);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+#loginform {
+  max-width: 800px;
+  width: 100%;
+  padding: 15px;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8vh;
+  position: relative;
+  width: 100%;
+  background-color: var(--main-darklg);
+}
+
+.logo > h3 {
+  color: var(--main-light);
+}
+
+.main {
+  overflow: hidden;
+  height: 92vh;
+  display: flex;
+}
+
+.main__left {
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+}
+
+.videos__group {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-dark);
+  width: 100%;
+}
+
+video {
+  height: auto;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  width: 100%;
+  max-width: 63%;
+  object-fit: cover;
+}
+
+.options {
+  padding: 1rem;
+  display: none;
+  background-color: var(--main-darklg);
+}
+
+.options__left {
+  display: flex;
+}
+
+.options__right {
+  margin-left: auto;
+}
+
+.options__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  height: 50px;
+  border-radius: 5px;
+  color: var(--main-light);
+  font-size: 1.2rem;
+  width: 50px;
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+.options__button:hover {
+  border: 1px solid white;
+  height: 48px;
+  width: 48px;
+}
+
+.options__button--long {
+  display: inline-flex !important;
+  width: auto !important;
+  padding: 0 10px;
+  margin-left: 0 !important;
+  margin-top: 15px !important;
+
+}
+.options__button--long a {
+    color: #fff;
+    text-decoration: none;
+}
+.options__button--long a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.background__red {
+  background-color: #f6484a;
+}
+
+.main__right {
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+  background-color: #242f41;
+}
+
+.main__chat_window {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.main__chat_window::-webkit-scrollbar {
+  display: none;
+}
+
+.main__message_container {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main__message_container > input {
+  height: 50px;
+  flex: 1;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding-left: 20px;
+  border: none;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+#localVideo {
+    width: 200px;
+    height: 150px;
+}
+
+
+.message > b {
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.message > b > i {
+  margin-right: 0.7rem;
+  font-size: 1rem;
+}
+
+.message > span {
+  padding: 0.5rem;
+  color: #fff
+}
+
+#video-grid {
+    padding: 1rem;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+#showChat {
+  display: none;
+}
+
+.header__back {
+  position: absolute;
+  font-size: 1.3rem;
+  left: 28px;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .main__right {
+    display: none;
+  }
+  .main__left {
+    width: 100%;
+    flex: 1;
+  }
+
+  video {
+    height: auto;
+    width: 100%;
+  }
+
+  #showChat {
+    display: flex;
+  }
+}
+
+.body-overlay {
+  position: absolute;
+  background-color: var(--main-darklg);
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none;
+  transition: all 2s;
+  opacity: 0;
+}
+.show {
+  display: flex !important;
+  transition: all 2s;
+  opacity: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form__group {
+  margin-top: 16px;
+  text-align: left;
+}
+.form__label {
+  display: block;
+}
+.form__input {
+  color: #333;
+  font-size: 18px;
+	margin: 0 auto;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  width: auto;
+  transition: all 0.3s;
+}
+#confirm {
+  display: none;
+  background-color: #F3F5F6;
+  color: #000000;
+  border: 1px solid #aaa;
+  position: fixed;
+  width: 270px;
+  height: 100px;
+  left: 40%;
+  top:40%;
+  margin-left: -100px;
+  padding: 10px 20px 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+  #confirm button {
+      background-color: #FFFFFF;
+      display: inline-block;
+      border-radius: 12px;
+      border: 4px solid #aaa;
+      padding: 5px;
+      text-align: center;
+      width: 60px;
+      cursor: pointer;
+  }
+
+  #confirm .message {
+      text-align: left;
+  }
+  input[type=button], input[type=submit], input[type=reset] {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 18px;
+  }

@@ -1,12 +1,73 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>WebRTC Video conference</title>
+        <meta charset="utf-8" />
+ 
+        <title>Directme Chat Connect (Private Room)</title>
+        <meta name="description" content="Directme Chat Connect (Private Room)" />
+        <link rel="stylesheet" href="css/style.css" />
         <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
         <link rel="stylesheet" href="css/main.css" />
     </head>
 
     <body>
+        <div class="header">
+            <div class="logo">
+                <div id="clock" class="header__back">
+                    <span id="seconds">00</span>:<span id="tens">00</span>
+                </div>
+                <h3>Directme Chat Connect (Private Room)</h2>
+            </div>
+        </div>
+        <div class="main">  
+            <div class="main__left">
+              <div class="videos__group">
+                <div id="video-grid">
+                    <div id="videos">
+                        <div id="videoGrid" class="grid-container">
+                            <div id="localVideo-container">
+                                <p>Dein Video</p>
+                                <video autoplay playsinline muted></video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="options">
+                <div class="options__left">
+                    <!--
+                  <div id="stopVideo" class="options__button">
+                    <i class="fa fa-video-camera"></i>
+                  </div>
+                  <div id="muteButton" class="options__button">
+                    <i class="fa fa-microphone"></i>
+                  </div>
+                  <div id="showChat" class="options__button">
+                    <i class="fa fa-comment"></i>
+                  </div>
+                    -->
+                </div>
+                <div class="options__right">
+                  <div id="exit" class="options__button">
+                    <i class="fas fa-sync-alt"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="main__right">
+              <div id="main__chat_window" class="main__chat_window">
+                  <div id="chatbox" class="messages">
+                     
+                  </div>
+              </div>
+              <div class="main__message_container">
+                <input id="chat_message" type="text" autocomplete="off" placeholder="Nachricht eingeben..." autofocus>
+                <div id="send" class="options__button">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         <h1></h1>
 
         <label for="roomId">Room ID</label>
@@ -15,14 +76,6 @@
         <button id="leaveBtn">Leave</button>
 
         <p id="notification"></p>
-
-        <div id="localVideo-container">
-            <video autoplay playsinline muted></video>
-        </div>
-
-        <div id="videos">
-            <div id="videoGrid" class="grid-container"></div>
-        </div>
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>

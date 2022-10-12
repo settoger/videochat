@@ -121,7 +121,7 @@ webrtc.addEventListener('newUser', (e) => {
     video.srcObject = stream;
 
     const p = document.createElement('p');
-    p.textContent = socketId;
+    p.innerHTML = "Partner Video";
 
     videoContainer.append(p);
     videoContainer.append(video);
