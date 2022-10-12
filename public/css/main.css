@@ -43,6 +43,6 @@ h1 {
 }
 
 #localVideo-container video {
-    width: 100%;
+    width: auto;
     height: 100%;
 }
