@@ -83,7 +83,6 @@ const setTitle = (status, e) => {
     console.log(`Room ${room} was ${status}`);
 
     notify(`Room ${room} was ${status}`);
-    document.querySelector('h1').textContent = `Room: ${room}`;
     mainDiv.classList.add("active");
     loginDiv.classList.remove("active");
     webrtc.gotStream();
