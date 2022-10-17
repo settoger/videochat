@@ -128,11 +128,12 @@ function startTimer () {
 
 /**
  * Leave the room
- */
+
 const leaveBtn = document.querySelector('#leaveBtn');
 leaveBtn.addEventListener('click', () => {
     webrtc.leaveRoom();
 });
+ */
 webrtc.addEventListener('leftRoom', (e) => {
     const room = e.detail.roomId;
     document.querySelector('h1').textContent = '';
