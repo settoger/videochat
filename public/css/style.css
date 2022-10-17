@@ -31,7 +31,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 8vh;
+  height: 50px;
   position: relative;
   width: 100%;
   background-color: var(--main-darklg);
@@ -43,8 +43,11 @@ body {
 
 .main {
   overflow: hidden;
-  height: 92vh;
-  display: flex;
+  height: calc(100vh - 50px);
+  display: none;
+}
+.main.active {
+  display: flex !important;
 }
 
 .main__left {

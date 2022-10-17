@@ -42,7 +42,7 @@ const pcConfig = {
  * Initialize webrtc
  */
 const webrtc = new Webrtc(socket, pcConfig, {
-    log: true,
+    log: false,
     warn: true,
     error: true,
 });
@@ -50,15 +50,28 @@ const webrtc = new Webrtc(socket, pcConfig, {
 /**
  * Create or join a room
  */
-const roomInput = document.querySelector('#roomId');
+ let seconds = 00; 
+ let tens = 00; 
+ const appendTens = document.getElementById("tens")
+ const appendSeconds = document.getElementById("seconds")
+ let Interval ;
+ const clock = document.getElementById("clock");
+ clearInterval(Interval);
+
+ const roomInput = document.querySelector('#roomId');
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
     if (!room) {
         notify('Room ID not provided');
+        document.getElementsByClassName("main").classList.remove("active");
+        document.getElementsByClassName("login__form").classList.add("active");
         return;
+    } else {
+        Interval = setInterval(startTimer, 1000);
+        document.getElementsByClassName("main").classList.add("active");
+        document.getElementsByClassName("login__form").classList.remove("active");
     }
-
     webrtc.joinRoom(room);
 });
 
@@ -69,10 +82,49 @@ const setTitle = (status, e) => {
 
     notify(`Room ${room} was ${status}`);
     document.querySelector('h1').textContent = `Room: ${room}`;
+    document.getElementsByClassName("main").classList.add("active");
+    document.getElementsByClassName("login__form").classList.remove("active");
     webrtc.gotStream();
 };
 webrtc.addEventListener('createdRoom', setTitle.bind(this, 'created'));
 webrtc.addEventListener('joinedRoom', setTitle.bind(this, 'joined'));
+
+function startTimer () {
+    tens++; 
+    
+    if(tens <= 9){
+      appendTens.innerHTML = "0" + tens;
+    }
+    
+    if (tens > 9){
+      appendTens.innerHTML = tens;
+      
+    } 
+    
+    if (tens > 60) {
+      seconds++;
+      appendSeconds.innerHTML = "0" + seconds;
+      tens = 0;
+      appendTens.innerHTML = "0" + 0;
+    }
+    
+    if (seconds > 9){
+      appendSeconds.innerHTML = seconds;
+    }
+
+    if (seconds > 19){
+      let element =  document.getElementById('body-overlay');
+      if (typeof(element) != 'undefined' && element != null)
+      {
+        document.getElementById("body-overlay").classList.add("show");
+      }
+    }
+    if (seconds > 18 && tens > 30){
+      $('.header__back').css("color", "red");
+    }
+  
+  };
+
 
 /**
  * Leave the room
@@ -116,7 +168,7 @@ webrtc.addEventListener('newUser', (e) => {
 
     const video = document.createElement('video');
     video.setAttribute('autoplay', true);
-    video.setAttribute('muted', true); // set to false
+    video.setAttribute('muted', false); // set to false
     video.setAttribute('playsinline', true);
     video.srcObject = stream;
 
@@ -173,3 +225,5 @@ webrtc.addEventListener('notification', (e) => {
 
     notify(notif);
 });
+
+window.scrollTo(0, document.body.scrollHeight);
