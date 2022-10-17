@@ -5,6 +5,8 @@ const socket = io.connect();
 const localVideo = document.querySelector('#localVideo-container video');
 const videoGrid = document.querySelector('#videoGrid');
 const notification = document.querySelector('#notification');
+const mainDiv = document.getElementById("main")
+const loginDiv = document.getElementById("loginForm")
 const notify = (message) => {
     notification.innerHTML = message;
 };
@@ -64,13 +66,13 @@ joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
     if (!room) {
         notify('Room ID not provided');
-        document.getElementsByClassName("main").classList.remove("active");
-        document.getElementsByClassName("login__form").classList.add("active");
+        mainDiv.classList.remove("active");
+        loginDiv.classList.add("active");
         return;
     } else {
         Interval = setInterval(startTimer, 1000);
-        document.getElementsByClassName("main").classList.add("active");
-        document.getElementsByClassName("login__form").classList.remove("active");
+        mainDiv.classList.add("active");
+        loginDiv.classList.remove("active");
     }
     webrtc.joinRoom(room);
 });
@@ -82,8 +84,8 @@ const setTitle = (status, e) => {
 
     notify(`Room ${room} was ${status}`);
     document.querySelector('h1').textContent = `Room: ${room}`;
-    document.getElementsByClassName("main").classList.add("active");
-    document.getElementsByClassName("login__form").classList.remove("active");
+    mainDiv.classList.add("active");
+    loginDiv.classList.remove("active");
     webrtc.gotStream();
 };
 webrtc.addEventListener('createdRoom', setTitle.bind(this, 'created'));
