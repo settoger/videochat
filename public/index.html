@@ -71,7 +71,7 @@
           <div id="loginForm" class="login__form active">
             <p>
               Directme Chat Connect ist eine speziell Entwickelte Video Plattform. Wir verbinden dich gleich mit einem anderen User. Ihr könnt euch sehen, aber nicht hören.<br>
-              Ihr könnt euch schreiben und machen, was ihr wollt. Dieser Chatraum ist 100% Privat. <br>
+              Ihr könnt euch schreiben und machen, was ihr wollt. Dieser Chatraum ist 100% privat. <br>
               Du musst mindestens 18 Jahre alt sein.<br>
               <strong>Wir raten dir dringend von einem Smartphone ab, da das Schreiben auf diesen Geräten sehr umständlich ist und den Spaß verringert. Wir empfehlen ein Notebook oder ein Tablet mit angeschlossener Tastatur</strong><br><br>
               <small>Bitte achte darauf, dass nichts auf deine Identität schließen lässt. 
@@ -80,8 +80,8 @@
             </p>
             <label for="roomId">Raum-Passwort:</label>
             <div class="login__inputs">
-              <input id="roomId" type="text" />
-              <button class="options__button" id="joinBtn"><i class="fa-solid fa-check"></i></button>
+              <input id="roomId" type="text" placeholder="Passwort"/>
+              <button class="options__button" id="joinBtn"><i class="fa fa-check"></i></button>
             </div>
           </div>
 
@@ -91,43 +91,5 @@
         <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
         <script src="js/webrtc.js"></script>
         <script src="js/main.js"></script>
-        <script>
-          $(document).ready(function () {
-
-          $("#send").click(function () {
-              var clientmsg = $("#chat_message").val();
-              $.post("post.php", { text: clientmsg });
-              $("#chat_message").val("");
-              return false;
-          });
-
-          document.getElementById("chat_message").addEventListener("keypress", function(event) {
-              if (event.key === "Enter") {
-                  event.preventDefault();
-                  document.getElementById("send").click();
-              }
-          });
-
-          function loadLog() {
-              var oldscrollHeight = $("#main__chat_window")[0].scrollHeight - 20; //Scroll height before the request
-
-              $.ajax({
-                  url: "log.html",
-                  cache: false,
-                  success: function (html) {
-                      $("#chatbox").html(html); //Insert chat log into the #chatbox div
-
-                      //Auto-scroll           
-                      var newscrollHeight = $("#main__chat_window")[0].scrollHeight - 20; //Scroll height after the request
-                      if(newscrollHeight > oldscrollHeight){
-                          $("#main__chat_window").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
-                      }   
-                  }
-              });
-          }
-
-          setInterval (loadLog, 1000);
-          });
-        </script>
     </body>
 </html>

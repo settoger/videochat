@@ -126,6 +126,40 @@ function startTimer () {
   
   };
 
+  $("#send").click(function () {
+    var clientmsg = $("#chat_message").val();
+    $.post("post.php", { text: clientmsg });
+    $("#chat_message").val("");
+    return false;
+});
+
+document.getElementById("chat_message").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("send").click();
+    }
+});
+
+function loadLog() {
+    var oldscrollHeight = $("#main__chat_window")[0].scrollHeight - 20; //Scroll height before the request
+
+    $.ajax({
+        url: "log.html",
+        cache: false,
+        success: function (html) {
+            $("#chatbox").html(html); //Insert chat log into the #chatbox div
+
+            //Auto-scroll           
+            var newscrollHeight = $("#main__chat_window")[0].scrollHeight - 20; //Scroll height after the request
+            if(newscrollHeight > oldscrollHeight){
+                $("#main__chat_window").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
+            }   
+        }
+    });
+}
+
+setInterval (loadLog, 1000);
+
 
 /**
  * Leave the room
