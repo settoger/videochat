@@ -104,6 +104,12 @@ class Webrtc extends EventTarget {
         this.socket.emit('leave room', this.room);
     }
 
+    chat(data) {
+        let message = {type: "chat", text: data, sockeId: this.socket.id};
+        this.socket.send(message, null, null, 1);
+        //this._emit('chat', message);
+    }
+
     // Get local stream
     getLocalStream(audioConstraints, videoConstraints) {
         return navigator.mediaDevices
@@ -186,6 +192,8 @@ class Webrtc extends EventTarget {
             }
         });
 
+        
+
         // Someone joins room
         this.socket.on('join', (room) => {
             this.log('Incoming request to join room: ' + room);
@@ -227,6 +235,11 @@ class Webrtc extends EventTarget {
          */
         this.socket.on('message', (message, socketId) => {
             this.log('From', socketId, ' received:', message.type);
+
+            if(message.type == "chat") {
+                this._emit('chat', message);
+                this.log('From', socketId, ' received:', message);
+            }
 
             // Participant leaves
             if (message.type === 'leave') {

@@ -42,8 +42,11 @@ io.sockets.on('connection', function (socket) {
      * If toId is NOT provided and room IS provided message will be broadcast to that room
      * If NONE is provided message will be sent to all clients
      */
-    socket.on('message', (message, toId = null, room = null) => {
+    socket.on('message', (message, toId = null, room = null, chat= null) => {
         log('Client ' + socket.id + ' said: ', message);
+        if(message.type == "chat"){
+            socket.broadcast.to(room).emit('chat', message, socket.id);
+        }
 
         if (toId) {
             console.log('From ', socket.id, ' to ', toId, message.type);
@@ -98,6 +101,10 @@ io.sockets.on('connection', function (socket) {
         } else {
             console.log('not an admin');
         }
+    });
+
+    socket.on('chat', (message) => {
+        socket.broadcast.emit('chat', message);
     });
 
     // participant leaves room

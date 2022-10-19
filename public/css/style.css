@@ -15,6 +15,10 @@ body {
   margin: 0;
   padding: 0;
 }
+.d-none {
+  display: none;
+}
+
 #loginform {
   max-width: 800px;
   width: 100%;
@@ -170,6 +174,14 @@ video {
   display: flex;
   flex-direction: column;
 }
+.message--server, .message--server span {
+  color: #f6484a !important;
+}
+
+.message--system, .message--system span {
+  color: #2f80ec !important;
+}
+
 #localVideo {
     width: 200px;
     height: 150px;

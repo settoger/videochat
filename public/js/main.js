@@ -44,7 +44,7 @@ const pcConfig = {
  * Initialize webrtc
  */
 const webrtc = new Webrtc(socket, pcConfig, {
-    log: false,
+    log: true,
     warn: true,
     error: true,
 });
@@ -52,6 +52,8 @@ const webrtc = new Webrtc(socket, pcConfig, {
 /**
  * Create or join a room
  */
+
+ 
  let seconds = 00; 
  let tens = 00; 
  const appendTens = document.getElementById("tens")
@@ -59,6 +61,11 @@ const webrtc = new Webrtc(socket, pcConfig, {
  let Interval ;
  const clock = document.getElementById("clock");
  clearInterval(Interval);
+
+ clock.addEventListener("dblclick", event => {
+    seconds = 00; 
+    tens = 00; 
+  })
 
  const roomInput = document.querySelector('#roomId');
 const joinBtn = document.querySelector('#joinBtn');
@@ -70,11 +77,18 @@ joinBtn.addEventListener('click', () => {
         loginDiv.classList.add("active");
         return;
     } else {
-        Interval = setInterval(startTimer, 1000);
         mainDiv.classList.add("active");
         loginDiv.classList.remove("active");
     }
     webrtc.joinRoom(room);
+    Interval = setInterval(startTimer, 1000);
+});
+
+document.getElementById("roomId").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("joinBtn").click();
+    }
 });
 
 const setTitle = (status, e) => {
@@ -89,6 +103,7 @@ const setTitle = (status, e) => {
 };
 webrtc.addEventListener('createdRoom', setTitle.bind(this, 'created'));
 webrtc.addEventListener('joinedRoom', setTitle.bind(this, 'joined'));
+
 
 function startTimer () {
     tens++; 
@@ -112,22 +127,58 @@ function startTimer () {
     if (seconds > 9){
       appendSeconds.innerHTML = seconds;
     }
-
-    if (seconds > 19){
-      let element =  document.getElementById('body-overlay');
-      if (typeof(element) != 'undefined' && element != null)
-      {
-        document.getElementById("body-overlay").classList.add("show");
-      }
-    }
   
   };
 
   $("#send").on("click", function () {
-    var clientmsg = $("#chat_message").val();
-    $.post("post.php", { text: clientmsg });
+    let socketID = webrtc.socket.id;
+    socketID = socketID.substring(0, 6)
+    let clientmsg = $("#chat_message").val();
+    //webrtc.socket.send(clientmsg, null, null, 1)
     $("#chat_message").val("");
-    return false;
+    if(clientmsg == ":stop") {
+        const div = document.createElement('div')
+        div.className = 'message message--system';
+        div.innerHTML =`<span><strong>System: </strong>Dein Stream ist pausiert. Niemand kann dich sehen!</span>`;
+        document.getElementById('chatbox').appendChild(div);
+        document.getElementById('localVideo-container').classList.remove("hide")
+        webrtc.chat("Stream deaktiviert")
+
+    } else if(clientmsg == ":start") {
+        const div = document.createElement('div')
+        div.className = 'message message--system';
+        div.innerHTML =`<span><strong>System: </strong>Dein Stream ist aktiv.</span>`;
+        document.getElementById('chatbox').appendChild(div);
+        document.getElementById('localVideo-container').classList.add("hide")
+        webrtc.chat("Stream aktiviert")
+    } else if(clientmsg == ":new") {
+        const div = document.createElement('div')
+        div.className = 'message message--system';
+        div.innerHTML =`<span><strong>System: </strong>Willst du wirklich einen neuen Partner suchen? Bestätige mit :yes</span>`;
+        document.getElementById('chatbox').appendChild(div);
+        webrtc.chat("Sucht einen neuen Partner")
+
+    } else if(clientmsg == ":yes") {
+        const div = document.createElement('div')
+        div.className = 'message message--system';
+        div.innerHTML =`<span><strong>System: </strong>Neuer Partner wird gesucht ... </span>`;
+        document.getElementById('chatbox').appendChild(div);
+
+        webrtc.chat("Suche neuen Partner")
+    } else if(clientmsg.startsWith(":")) {
+        const div = document.createElement('div')
+        div.className = 'message message--system';
+        div.innerHTML =`<span><strong>System: </strong>Befehl nicht erkannt</span>`;
+        document.getElementById('chatbox').appendChild(div);
+    } else {
+        const div = document.createElement('div')
+        div.className = 'message';
+        div.innerHTML =`<span><strong>${socketID}: </strong> ${clientmsg} </span>`;
+        document.getElementById('chatbox').appendChild(div);
+        webrtc.chat(clientmsg)
+    }
+
+    scrollContent()
 });
 
 document.getElementById("chat_message").addEventListener("keypress", function(event) {
@@ -136,27 +187,6 @@ document.getElementById("chat_message").addEventListener("keypress", function(ev
         document.getElementById("send").click();
     }
 });
-
-function loadLog() {
-    var oldscrollHeight = $("#main__chat_window")[0].scrollHeight - 20; //Scroll height before the request
-
-    $.ajax({
-        url: "log.html",
-        cache: false,
-        success: function (html) {
-            $("#chatbox").html(html); //Insert chat log into the #chatbox div
-
-            //Auto-scroll           
-            var newscrollHeight = $("#main__chat_window")[0].scrollHeight - 20; //Scroll height after the request
-            if(newscrollHeight > oldscrollHeight){
-                $("#main__chat_window").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
-            }   
-        }
-    });
-}
-
-setInterval (loadLog, 1000);
-
 
 /**
  * Leave the room
@@ -171,6 +201,22 @@ webrtc.addEventListener('leftRoom', (e) => {
     document.querySelector('h1').textContent = '';
     notify(`Left the room ${room}`);
 });
+
+webrtc.addEventListener('chat', (e) => {
+    let socketID = e.detail.sockeId;
+    socketID = socketID.substring(0, 6)
+
+    const div = document.createElement('div')
+    div.className = 'message';
+    div.innerHTML =`<span><strong>${socketID}: </strong> ${e.detail.text} </span>`;
+    document.getElementById('chatbox').appendChild(div);
+    scrollContent()
+});
+
+function scrollContent() {
+    let oldscrollHeight = $("#main__chat_window")[0].scrollHeight - 20;
+    $("#main__chat_window").animate({ scrollTop: oldscrollHeight }, 'normal');
+}
 
 /**
  * Get local media
@@ -201,7 +247,7 @@ webrtc.addEventListener('newUser', (e) => {
 
     const video = document.createElement('video');
     video.setAttribute('autoplay', true);
-    video.setAttribute('muted', false); // set to false
+    video.setAttribute('muted', true); // set to false
     video.setAttribute('playsinline', true);
     video.srcObject = stream;
 
@@ -224,6 +270,7 @@ webrtc.addEventListener('newUser', (e) => {
         videoContainer.append(kickBtn);
     }
     videoGrid.append(videoContainer);
+    //document.getElementById("clock").classList.remove("d-none")
 });
 
 /**
@@ -233,7 +280,7 @@ webrtc.addEventListener('removeUser', (e) => {
     const socketId = e.detail.socketId;
     if (!socketId) {
         // remove all remote stream elements
-        videoGrid.innerHTML = '';
+        videoGrid.innerHTML = ''; 
         return;
     }
     document.getElementById(socketId).remove();
@@ -247,6 +294,10 @@ webrtc.addEventListener('error', (e) => {
     console.error(error);
 
     notify(error);
+});
+
+webrtc.addEventListener('message', (e) => {
+    console.error(e);
 });
 
 /**

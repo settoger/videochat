@@ -10,16 +10,12 @@
         <link rel="stylesheet" href="css/main.css" />
         <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-          console.log($('#send'))
-        </script>
-
     </head>
 
     <body>
         <div class="header">
             <div class="logo">
-                <div id="clock" class="header__back">
+                <div id="clock" class="header__back d-none">
                     <span id="seconds">00</span>:<span id="tens">00</span>
                 </div>
                 <h3>Directme Chat Connect (Private Room)</h3>
@@ -31,7 +27,8 @@
                 <div id="video-grid">
                     <div id="videos">
                         <div id="videoGrid" class="grid-container">
-                            <div id="localVideo-container">
+                            <div id="localVideo-container" class="localVideo hide">
+                                <p>Video deaktiviert <br><small>zum aktivieren :start eingeben</small></p>
                                 <video autoplay playsinline muted></video>
                             </div>
                         </div>
@@ -62,7 +59,15 @@
             <div class="main__right">
               <div id="main__chat_window" class="main__chat_window">
                   <div id="chatbox" class="messages">
-                     
+                    <div class="message message--server">
+                      <span>Sende <b>:new</b> für einen neuen Partner (der Chat wird gelöscht)</span>
+                    </div>
+                    <div class="message message--server">
+                      <span>Sende <b>:stop</b> um dein Video zu stoppen (der Chat bleibt aktiv)</span>
+                    </div>
+                    <div class="message message--server">
+                      <span>Sende <b>:start</b> um dein Video zu starten</span>
+                    </div>
                   </div>
               </div>
               <div class="main__message_container">
