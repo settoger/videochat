@@ -120,13 +120,10 @@ function startTimer () {
         document.getElementById("body-overlay").classList.add("show");
       }
     }
-    if (seconds > 18 && tens > 30){
-      $('.header__back').css("color", "red");
-    }
   
   };
 
-  $("#send").click(function () {
+  $("#send").on("click", function () {
     var clientmsg = $("#chat_message").val();
     $.post("post.php", { text: clientmsg });
     $("#chat_message").val("");

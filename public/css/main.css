@@ -33,7 +33,7 @@ h1 {
 }
 
 #localVideo-container {
-    height: 150px;
+    height: 100px;
     display: flex;
     justify-self: start;
     align-self: start;
