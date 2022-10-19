@@ -43,7 +43,7 @@ body {
 
 .main {
   overflow: hidden;
-  height: calc(100vh - 174px);
+  height: calc(100vh - 170px);
   display: none;
 }
 .main.active {

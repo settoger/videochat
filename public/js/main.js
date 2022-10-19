@@ -125,7 +125,7 @@ function startTimer () {
 
   $("#send").on("click", function () {
     var clientmsg = $("#chat_message").val();
-    $.post("post.php", { text: clientmsg });
+    $.post("../post.php", { text: clientmsg });
     $("#chat_message").val("");
     return false;
 });
