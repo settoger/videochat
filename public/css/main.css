@@ -71,3 +71,14 @@ h1 {
 .login__form.active {
     display: flex !important;
 }
+.login__inputs {
+    display: flex;
+    flex-direction: row;
+  }
+.login__inputs > input {
+    height: 50px;
+    font-size: 1rem;
+    border-radius: 5px;
+    padding-left: 20px;
+    border: none;
+  }
