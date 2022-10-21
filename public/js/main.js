@@ -53,20 +53,6 @@ const webrtc = new Webrtc(socket, pcConfig, {
  * Create or join a room
  */
 
- 
- let seconds = 00; 
- let tens = 00; 
- const appendTens = document.getElementById("tens")
- const appendSeconds = document.getElementById("seconds")
- let Interval ;
- const clock = document.getElementById("clock");
- clearInterval(Interval);
-
- clock.addEventListener("dblclick", event => {
-    seconds = 00; 
-    tens = 00; 
-  })
-
  const roomInput = document.querySelector('#roomId');
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
@@ -81,7 +67,6 @@ joinBtn.addEventListener('click', () => {
         loginDiv.classList.remove("active");
     }
     webrtc.joinRoom(room);
-    Interval = setInterval(startTimer, 1000);
 });
 
 document.getElementById("roomId").addEventListener("keypress", function(event) {
@@ -104,36 +89,11 @@ const setTitle = (status, e) => {
 webrtc.addEventListener('createdRoom', setTitle.bind(this, 'created'));
 webrtc.addEventListener('joinedRoom', setTitle.bind(this, 'joined'));
 
-
-function startTimer () {
-    tens++; 
-    
-    if(tens <= 9){
-      appendTens.innerHTML = "0" + tens;
-    }
-    
-    if (tens > 9){
-      appendTens.innerHTML = tens;
-      
-    } 
-    
-    if (tens > 60) {
-      seconds++;
-      appendSeconds.innerHTML = "0" + seconds;
-      tens = 0;
-      appendTens.innerHTML = "0" + 0;
-    }
-    
-    if (seconds > 9){
-      appendSeconds.innerHTML = seconds;
-    }
-  
-  };
-
   $("#send").on("click", function () {
     let socketID = webrtc.socket.id;
     socketID = socketID.substring(0, 6)
     let clientmsg = $("#chat_message").val();
+    document.getElementById("chat_message").focus();
     //webrtc.socket.send(clientmsg, null, null, 1)
     $("#chat_message").val("");
     if(clientmsg == ":stop") {
@@ -271,7 +231,6 @@ webrtc.addEventListener('newUser', (e) => {
         videoContainer.append(kickBtn);
     }
     videoGrid.append(videoContainer);
-    //document.getElementById("clock").classList.remove("d-none")
 });
 
 /**
