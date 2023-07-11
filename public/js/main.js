@@ -44,7 +44,7 @@ const pcConfig = {
  * Initialize webrtc
  */
 const webrtc = new Webrtc(socket, pcConfig, {
-    log: false,
+    log: true,
     warn: false,
     error: false,
 });
@@ -54,7 +54,7 @@ const webrtc = new Webrtc(socket, pcConfig, {
  */
 
  const roomInput = document.querySelector('#roomId');
- const userName = document.querySelector('#userID');
+ const userName = document.querySelector('#userID').value;
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
