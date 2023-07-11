@@ -54,6 +54,7 @@ const webrtc = new Webrtc(socket, pcConfig, {
  */
 
  const roomInput = document.querySelector('#roomId');
+ const userName = document.querySelector('#username');
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
@@ -133,7 +134,7 @@ webrtc.addEventListener('joinedRoom', setTitle.bind(this, 'joined'));
     } else {
         const div = document.createElement('div')
         div.className = 'message';
-        div.innerHTML =`<span><strong>${socketID}: </strong> ${clientmsg} </span>`;
+        div.innerHTML =`<span><strong>${userName}: </strong> ${clientmsg} </span>`;
         document.getElementById('chatbox').appendChild(div);
         webrtc.chat(clientmsg)
     }
