@@ -44,9 +44,9 @@ const pcConfig = {
  * Initialize webrtc
  */
 const webrtc = new Webrtc(socket, pcConfig, {
-    log: true,
-    warn: true,
-    error: true,
+    log: false,
+    warn: false,
+    error: false,
 });
 
 /**
