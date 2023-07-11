@@ -54,7 +54,7 @@ const webrtc = new Webrtc(socket, pcConfig, {
  */
 
  const roomInput = document.querySelector('#roomId');
- const userName = document.querySelector('#userID').value;
+ const userName = document.getElementById('userID').value;
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
@@ -169,7 +169,7 @@ webrtc.addEventListener('chat', (e) => {
 
     const div = document.createElement('div')
     div.className = 'message';
-    div.innerHTML =`<span><strong>${socketID}: </strong> ${e.detail.text} </span>`;
+    div.innerHTML =`<span><strong>Partner: </strong> ${e.detail.text} </span>`;
     document.getElementById('chatbox').appendChild(div);
     scrollContent()
 });
@@ -208,7 +208,7 @@ webrtc.addEventListener('newUser', (e) => {
 
     const video = document.createElement('video');
     video.setAttribute('autoplay', true);
-    video.setAttribute('muted', true); // set to false
+    video.setAttribute('muted', false); // set to false
     video.muted = true;
     video.setAttribute('playsinline', true);
     video.srcObject = stream;

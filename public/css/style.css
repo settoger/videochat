@@ -52,6 +52,12 @@ body {
 }
 .main.active {
   display: flex !important;
+  flex-direction: row;
+}
+@media (max-width: 600px) {
+  .main.active {
+    flex-direction: column;
+  }
 }
 
 .main__left {
