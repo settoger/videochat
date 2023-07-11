@@ -70,7 +70,7 @@ joinBtn.addEventListener('click', () => {
     webrtc.joinRoom(room);
 });
 
-document.getElementById("roomId").addEventListener("keypress", function(event) {
+document.getElementById("userID").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         document.getElementById("joinBtn").click();
