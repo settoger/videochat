@@ -54,7 +54,8 @@ const webrtc = new Webrtc(socket, pcConfig, {
  */
 
  const roomInput = document.querySelector('#roomId');
- const userName = document.getElementById('userID').value;
+ const userName = document.querySelector('#userID').value;
+console.log(userName.value)
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
@@ -64,6 +65,7 @@ joinBtn.addEventListener('click', () => {
         loginDiv.classList.add("active");
         return;
     } else {
+        notify('Username: '+userName.value);
         mainDiv.classList.add("active");
         loginDiv.classList.remove("active");
     }
@@ -134,7 +136,7 @@ webrtc.addEventListener('joinedRoom', setTitle.bind(this, 'joined'));
     } else {
         const div = document.createElement('div')
         div.className = 'message';
-        div.innerHTML =`<span><strong>${userName}: </strong> ${clientmsg} </span>`;
+        div.innerHTML =`<span><strong>${userName.value}: </strong> ${clientmsg} </span>`;
         document.getElementById('chatbox').appendChild(div);
         webrtc.chat(clientmsg)
     }
