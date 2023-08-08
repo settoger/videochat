@@ -136,9 +136,9 @@ webrtc.addEventListener('joinedRoom', setTitle.bind(this, 'joined'));
     } else {
         const div = document.createElement('div')
         div.className = 'message';
-        div.innerHTML =`<span><strong>${userName.value}: </strong> ${clientmsg} </span>`;
+        div.innerHTML =`<span><strong>${userName}: </strong> ${clientmsg} </span>`;
         document.getElementById('chatbox').appendChild(div);
-        webrtc.chat(clientmsg)
+        webrtc.chat(userName + ": " + clientmsg)
     }
 
     scrollContent()
