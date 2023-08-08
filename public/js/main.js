@@ -53,19 +53,19 @@ const webrtc = new Webrtc(socket, pcConfig, {
  * Create or join a room
  */
 
- const roomInput = document.querySelector('#roomId');
- const userName = document.querySelector('#userID').value;
-console.log(userName.value)
+const roomInput = document.querySelector('#roomId');
+let userName = document.querySelector('#userID');
 const joinBtn = document.querySelector('#joinBtn');
 joinBtn.addEventListener('click', () => {
     const room = roomInput.value;
+    userName = userName.value;
     if (!room) {
         notify('Room ID not provided');
         mainDiv.classList.remove("active");
         loginDiv.classList.add("active");
         return;
     } else {
-        notify('Username: '+userName.value);
+        notify('Username: '+ userName);
         mainDiv.classList.add("active");
         loginDiv.classList.remove("active");
     }
@@ -83,7 +83,7 @@ const setTitle = (status, e) => {
     const room = e.detail.roomId;
 
     console.log(`Room ${room} was ${status}`);
-
+    notify(`Username ${userName} has joined`);
     notify(`Room ${room} was ${status}`);
     mainDiv.classList.add("active");
     loginDiv.classList.remove("active");
