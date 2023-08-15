@@ -171,7 +171,7 @@ webrtc.addEventListener('chat', (e) => {
 
     const div = document.createElement('div')
     div.className = 'message';
-    div.innerHTML =`<span><strong>Partner: </strong> ${e.detail.text} </span>`;
+    div.innerHTML =`<span>${e.detail.text} </span>`;
     document.getElementById('chatbox').appendChild(div);
     scrollContent()
 });
