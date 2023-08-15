@@ -66,20 +66,18 @@ h1 {
 }
 .login__form {
     position: absolute;
-    width: 100%;
     height: 100%;
     left: 0;
     top: 0;
     display: none;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     background-color: rgba(255,255,255,0.2);
     flex-direction: column;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
-.login__form p {
-    padding-left: 5rem;
-    padding-right: 5rem;
-    margin-bottom: 3rem;
+.login__form p, label, div {
     color: #fff;
 }
 .login__form.active {

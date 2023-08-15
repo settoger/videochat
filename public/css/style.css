@@ -41,6 +41,18 @@ body {
   background-color: var(--main-darklg);
 }
 
+.mobile {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+@media (min-width: 600px) {
+  .mobile {
+    display: none;
+  }
+}
+
 .logo > h3 {
   color: var(--main-light);
 }
